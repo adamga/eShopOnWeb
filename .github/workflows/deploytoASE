@@ -1,0 +1,79 @@
+name: eShopOnWeb Build, Deploy and  Test
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.0.x'
+        include-prerelease: true
+
+    - name: Build with dotnet
+      run: dotnet build ./eShopOnWeb.sln --configuration Release
+    
+    - name: Test with dotnet
+      run: dotnet test ./eShopOnWeb.sln --configuration Release
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: '7.0.x'
+            include-prerelease: true
+
+    -name: Connect to Azure Key Vault
+        uses: azure/login@v1
+        with:
+            creds: ${{ secrets.AzureKeyVault_Creds }}
+    
+    -name: Retrieve Secrets from Key Vault
+
+
+    -name: Execute Terraform to create Azure Resources
+        uses: hashicorp/setup-terraform@v1
+        with:
+            terraform_version: 1.0.0
+            cli_config_credentials_token: ${{ secrets.AzureKeyVault_Creds }}
+        run: terraform apply -auto-approve
+
+    -name: Create Azure SQLDB
+        uses: azure/sql-action@v1
+        with:
+            server-name: 'eshoponweb'
+            admin-username: ${{ secrets.AzureSQLDB_AdminUsername }}
+            admin-password: ${{ secrets.AzureSQLDB_AdminPassword }}
+            database-name: 'eshoponweb'
+            sql-file: './src/Infrastructure/Data/eshoponweb.sql'
+            publish-profile: ${{ secrets.AzureSQLDB_PublishProfile_eshoponweb }}
+      
+
+    -name: Create Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+            app-name: 'eshoponweb'
+            publish-profile: ${{ secrets.AzureAppService_PublishProfile_eshoponweb }}
+            package: './src/Web/Web.csproj'
+            create-resource-group: false
+            app-settings: 'ASPNETCORE_ENVIRONMENT=Production'
+            slot-name: 'production'
+
+
+
+    -name: deploy to Azure
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'eshoponweb'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_eshoponweb }}
+        package: './src/Web/Web.csproj'
