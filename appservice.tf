@@ -35,7 +35,7 @@ data "azurerm_log_analytics_workspace" "webshopdemo" {
 
 
 resource "azurerm_sql_server" "webshopdemo" {
-  name                         = "webshopdemo-sqlsvr"
+  name                         = "agwebshopdemo-sqlsvr"
   resource_group_name          = azurerm_resource_group.webshopdemo.name
   location                     = azurerm_resource_group.webshopdemo.location
   version                      = "12.0"
@@ -44,7 +44,7 @@ resource "azurerm_sql_server" "webshopdemo" {
 }
 
 resource "azurerm_sql_database" "webshopdemo" {
-  name                             = "webshopdemo-db"
+  name                             = "agwebshopdemo-db"
   resource_group_name              = azurerm_resource_group.webshopdemo.name
   location                         = azurerm_resource_group.webshopdemo.location
   server_name                      = azurerm_sql_server.webshopdemo.name
