@@ -28,10 +28,6 @@ resource "azurerm_app_service" "webshopdemo" {
     app_service_plan_id = azurerm_app_service_plan.webshopdemo.id
 }
 
-data "azurerm_log_analytics_workspace" "webshopdemo" {
-  name                = "ageshopwebdevloganalytics"
-  resource_group_name = "ageshopwebdev"
-}
 
 
 resource "azurerm_sql_server" "webshopdemo" {
