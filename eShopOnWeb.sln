@@ -43,7 +43,7 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Terraform", "Terraform", "{81DEABB1-9781-42DA-9422-8007C652A15A}"
 	ProjectSection(SolutionItems) = preProject
-		main.tf = main.tf
+		appservice.tf = appservice.tf
 	EndProjectSection
 EndProject
 Global
