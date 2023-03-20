@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.override.yml = docker-compose.override.yml
 		docker-compose.yml = docker-compose.yml
 		.github\workflows\dotnetcore.yml = .github\workflows\dotnetcore.yml
+		keyvaultvars.txt = keyvaultvars.txt
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -44,6 +45,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Terraform", "Terraform", "{81DEABB1-9781-42DA-9422-8007C652A15A}"
 	ProjectSection(SolutionItems) = preProject
 		appservice.tf = appservice.tf
+		keyvaultvars.txt = keyvaultvars.txt
 	EndProjectSection
 EndProject
 Global
