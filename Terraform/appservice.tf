@@ -13,8 +13,9 @@ data "azurerm_key_vault" "AppDeploymentKV" {
 
 data "azurerm_key_vault_secret" "rgname" {
   name         = "rgname"
-  key_vault_id = data.azurerm_key_vault.existing.id
+  key_vault_id = data.azurerm_key_vault.AppDeploymentKV.id
 }
+
 data "azurerm_key_vault_secret" "dev-ageswrglocation" {
   name         = "dev-ageswrglocation"
   key_vault_id = data.azurerm_key_vault.existing.id
