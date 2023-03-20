@@ -6,8 +6,8 @@ provider "azurerm" {
     features {}
 }
 
-data "azurerm_key_vault" "AppDeploymentKV " {
-  name                = "AppDeploymentKV "
+data "azurerm_key_vault" "AppDeploymentKV" {
+  name                = "AppDeploymentKV"
   resource_group_name = "Deploy"
 }
 
