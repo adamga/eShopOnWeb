@@ -43,9 +43,9 @@ data "azurerm_key_vault_secret" "dev-ageswsqlservername" {
   name         = "dev-ageswsqlservername"
   key_vault_id = data.azurerm_key_vault.dev-ageswsqlservername.id
 }
-data "azurerm_key_vault_secret" "dev-ageswsqlservername" {
+data "azurerm_key_vault_secret" "dev-ageswsqlversion" {
   name         = "dev-ageswsqlversion"
-  key_vault_id = data.azurerm_key_vault.dev-ageswsqlservername.id
+  key_vault_id = data.azurerm_key_vault.dev-ageswsqlversion.id
 }
 data "azurerm_key_vault_secret" "dev-ageswsqladministrator-login" {
   name         = "dev-ageswsqladministrator-login"
