@@ -24,6 +24,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0BD72BEA-EF42-4B72-8B69-12A39EC76FBA}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		appservice.tf = appservice.tf
 		Directory.Packages.props = Directory.Packages.props
 		docker-compose.override.yml = docker-compose.override.yml
 		docker-compose.yml = docker-compose.yml
@@ -44,7 +45,6 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Terraform", "Terraform", "{81DEABB1-9781-42DA-9422-8007C652A15A}"
 	ProjectSection(SolutionItems) = preProject
-		appservice.tf = appservice.tf
 		keyvaultvars.txt = keyvaultvars.txt
 	EndProjectSection
 EndProject
