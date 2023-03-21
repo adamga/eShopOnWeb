@@ -74,7 +74,7 @@ data "azurerm_key_vault_secret" "kvmode" {
   key_vault_id = data.azurerm_key_vault.mykv.id
 }
 data "azurerm_key_vault_secret" "kvobj" {
-  name         = "dev-ageswdbrequested_service_objective_name"
+  name         = "dev-ageswdbrequested-service-objective-name"
   key_vault_id = data.azurerm_key_vault.mykv.id
 }
 data "azurerm_key_vault_secret" "kvrule" {
@@ -127,7 +127,7 @@ data "azurerm_key_vault_secret" "kvendip" {
 
 resource "azurerm_resource_group" "webshopdemo" {
     name = data.azurerm_key_vault_secret.kvrgname.value
-    location =  data.azurerm_key_vault_secret.dev-ageswrglocation.value
+    location =  data.azurerm_key_vault_secret.kvlocation.value
 }
 
 resource "azurerm_app_service_plan" "webshopdemo" {
