@@ -11,79 +11,79 @@ data "azurerm_key_vault" "AppDeploymentKV" {
   resource_group_name = "Deploy"
 }
 
-data "azurerm_key_vault_secret" "rgname" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "rgname"
   key_vault_id = data.azurerm_key_vault.AppDeploymentKV.id
 }
-data "azurerm_key_vault_secret" "dev-ageswrglocation" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswrglocation"
   key_vault_id = data.azurerm_key_vault.dev-ageswrglocation.id
 }
 
-data "azurerm_key_vault_secret" "dev-ageswaspname" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswaspname"
   key_vault_id = data.azurerm_key_vault.dev-ageswaspname.id
 }
 
-data "azurerm_key_vault_secret" "dev-ageswasptier" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswasptier"
   key_vault_id = data.azurerm_key_vault.dev-ageswasptier.id
 }
 
-data "azurerm_key_vault_secret" "dev-dev-ageswasptier" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-dev-ageswasptier"
   key_vault_id = data.azurerm_key_vault.dev-dev-ageswasptier.id
 }
 
-data "azurerm_key_vault_secret" "dev-ageswapservicename" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswapservicename"
   key_vault_id = data.azurerm_key_vault.dev-ageswapservicename.id
 }
-data "azurerm_key_vault_secret" "dev-ageswsqlservername" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswsqlservername"
   key_vault_id = data.azurerm_key_vault.dev-ageswsqlservername.id
 }
-data "azurerm_key_vault_secret" "dev-ageswsqlversion" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswsqlversion"
   key_vault_id = data.azurerm_key_vault.dev-ageswsqlversion.id
 }
-data "azurerm_key_vault_secret" "dev-ageswsqladministrator-login" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswsqladministrator-login"
   key_vault_id = data.azurerm_key_vault.dev-ageswsqladministrator-login.id
 }
-data "azurerm_key_vault_secret" "dev-ageswsqladministrator-login-password" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswsqladministrator-login-password"
   key_vault_id = data.azurerm_key_vault.dev-ageswsqladministrator-login-password.id
 }
-data "azurerm_key_vault_secret" "dev-ageswdbname" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswdbname"
   key_vault_id = data.azurerm_key_vault.dev-ageswdbname.id
 }
-data "azurerm_key_vault_secret" "dev-ageswdbedition" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswdbedition"
   key_vault_id = data.azurerm_key_vault.dev-ageswdbedition.id
 }
-data "azurerm_key_vault_secret" "dev-ageswdbcollation" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswdbcollation"
   key_vault_id = data.azurerm_key_vault.dev-ageswdbcollation.id
 }
-data "azurerm_key_vault_secret" "dev-ageswdbcreate-mode" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswdbcreate-mode"
   key_vault_id = data.azurerm_key_vault.dev-ageswdbcreate-mode.id
 }
-data "azurerm_key_vault_secret" "dev-ageswdbrequested_service_objective_name" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswdbrequested_service_objective_name"
   key_vault_id = data.azurerm_key_vault.dev-ageswdbrequested_service_objective_name.id
 }
-data "azurerm_key_vault_secret" "dev-ageswdbsecrulename" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswdbsecrulename"
   key_vault_id = data.azurerm_key_vault.dev-ageswdbsecrulename.id
 }
-data "azurerm_key_vault_secret" "dev-ageswstart-ip-address" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswstart-ip-address"
   key_vault_id = data.azurerm_key_vault.dev-ageswstart-ip-address.id
 }
-data "azurerm_key_vault_secret" "dev-ageswend-ip-address" {
+data "azurerm_key_vault_secret" "webshopdemo" {
   name         = "dev-ageswend-ip-address"
   key_vault_id = data.azurerm_key_vault.dev-ageswend-ip-address.id
 }
