@@ -131,7 +131,7 @@ resource "azurerm_resource_group" "webshopdemo" {
 }
 
 resource "azurerm_app_service_plan" "webshopdemo" {
-    name                = data.azurerm_key_vault_secret.kvasp.value
+    name                =   
     location            = azurerm_resource_group.webshopdemo.location
     resource_group_name = azurerm_resource_group.webshopdemo.name
     sku {

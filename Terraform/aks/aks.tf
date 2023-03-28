@@ -16,22 +16,17 @@ data "azurerm_key_vault_secret" "kvlocation" {
 }
 
 
-resource "azurerm_resource_group" "example" {
-  name     = data.azurerm_key_vault_secret.kvrgname.value
-  location = data.azurerm_key_vault_secret.kvlocation.value
-}
-
 resource "azurerm_container_registry" "example" {
   name                = "agwebshopdemocr"
-  resource_group_name = azurerm_resource_group.example.name
-  location            = azurerm_resource_group.example.location
+  resource_group_name = data.azurerm_key_vault_secret.kvrgname.value
+  location            = data.azurerm_key_vault_secret.kvlocation.value
   sku                 = "Basic"
 }
 
 resource "azurerm_kubernetes_cluster" "example" {
   name                = "agwebshopcluster"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = data.azurerm_key_vault_secret.kvlocation.value
+  resource_group_name = data.azurerm_key_vault_secret.kvrgname.value
   dns_prefix          = "agwebshopcluster"
 
   default_node_pool {
