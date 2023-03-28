@@ -16,14 +16,14 @@ data "azurerm_key_vault_secret" "kvlocation" {
 }
 
 
-resource "azurerm_container_registry" "example" {
+resource "azurerm_container_registry" "webshopaks" {
   name                = "agwebshopdemocr"
   resource_group_name = data.azurerm_key_vault_secret.kvrgname.value
   location            = data.azurerm_key_vault_secret.kvlocation.value
   sku                 = "Basic"
 }
 
-resource "azurerm_kubernetes_cluster" "example" {
+resource "azurerm_kubernetes_cluster" "webshopaks" {
   name                = "agwebshopcluster"
   location            = data.azurerm_key_vault_secret.kvlocation.value
   resource_group_name = data.azurerm_key_vault_secret.kvrgname.value
