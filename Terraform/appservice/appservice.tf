@@ -91,40 +91,6 @@ data "azurerm_key_vault_secret" "kvendip" {
 }
 
 
-#data "azurerm_key_vault" "example" {
-#  name                = "mykeyvault"
-#  resource_group_name = "myresourcegroup"
-#}
-
-#data "azurerm_key_vault_secret" "secret1" {
-#  name         = "mysecret1"
-#  key_vault_id = data.azurerm_key_vault.example.id
-#}
-
-#data "azurerm_key_vault_secret" "secret2" {
-#  name         = "mysecret2"
-#  key_vault_id = data.azurerm_key_vault.example.id
-#}
-
-#resource "azurerm_virtual_machine" "example" {
-#  # ...
-
-#  os_profile_linux_config {
-#    # ...
-#    ssh_keys {
-#      path     = "/home/user/.ssh/authorized_keys"
-#      key_data = data.azurerm_key_vault_secret.secret1.value
-#    }
-#  }
-
-#  connection {
-#    type     = "ssh"
-#    user     = "user"
-#    password = data.azurerm_key_vault_secret.secret2.value
-#  }
-#}
-
-
 resource "azurerm_resource_group" "webshopdemo" {
     name = data.azurerm_key_vault_secret.kvrgname.value
     location =  data.azurerm_key_vault_secret.kvlocation.value
@@ -162,7 +128,7 @@ resource "azurerm_sql_database" "webshopdemo" {
   resource_group_name              = azurerm_resource_group.webshopdemo.name
   location                         = azurerm_resource_group.webshopdemo.location
   server_name                      = azurerm_sql_server.webshopdemo.name
-  edition                          = data.azurerm_key_vault_secret.kvedition.value
+  edition                          =  data.azurerm_key_vault_secret.kvedition.value
   collation                        =  data.azurerm_key_vault_secret.kvcollation.value
   create_mode                      =  data.azurerm_key_vault_secret.kvmode.value
   requested_service_objective_name =  data.azurerm_key_vault_secret.kvobj.value
