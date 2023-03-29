@@ -97,7 +97,7 @@ resource "azurerm_resource_group" "webshopdemo" {
 }
 
 resource "azurerm_app_service_plan" "webshopdemo" {
-    name                =   
+    name                =   data.azurerm_key_vault_secret.dev-ageswaspname.value
     location            = azurerm_resource_group.webshopdemo.location
     resource_group_name = azurerm_resource_group.webshopdemo.name
     sku {
