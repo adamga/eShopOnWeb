@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eshoponweb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eshoponweb
+  template:
+    metadata:
+      labels:
+        app: eshoponweb
+    spec:
+      containers:
+      - name: eshoponweb
+        image: eshoponweb
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: eshoponweb
+spec:
+  selector:
+    app: eshoponweb
+  ports:
+  - protocol: TCP
+    port: 80
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: eshoponweb-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: eshoponweb
+          servicePort: 80

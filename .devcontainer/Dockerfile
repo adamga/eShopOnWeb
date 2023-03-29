@@ -78,5 +78,21 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-# Set PATH for dotnet tools
-ENV PATH "$PATH:/home/$USERNAME/.dotnet/tools"
+    ENV PATH "$PATH:/home/$USERNAME/.dotnet/tools"
+
+
+# copy the whole solution to the container
+
+COPY "C:\eshoponweb\eShopOnWeb" /src
+WORKDIR /src
+RUN dotnet restore "eShopOnWeb.sln"
+RUN dotnet build "eShopOnWeb.sln" 
+RUN dotnet publish "eShopOnWeb.sln" 
+
+
+WORKDIR /app
+
+ENTRYPOINT ["dotnet", "eShopOnWeb.dll"]
+
+
+
