@@ -97,7 +97,7 @@ resource "azurerm_resource_group" "webshopdemo" {
 }
 
 resource "azurerm_app_service_plan" "webshopdemo" {
-    name                =   data.azurerm_key_vault_secret.dev-ageswaspname.value
+    name                = data.azurerm_key_vault_secret.kvasp.value
     location            = azurerm_resource_group.webshopdemo.location
     resource_group_name = azurerm_resource_group.webshopdemo.name
     sku {
@@ -107,7 +107,7 @@ resource "azurerm_app_service_plan" "webshopdemo" {
 }
 
 resource "azurerm_app_service" "webshopdemo" {
-    name                =  data.azurerm_key_vault_secret.kvwebname.value
+    name                = data.azurerm_key_vault_secret.kvwebname.value
     location            = azurerm_resource_group.webshopdemo.location
     resource_group_name = azurerm_resource_group.webshopdemo.name
     app_service_plan_id = azurerm_app_service_plan.webshopdemo.id
