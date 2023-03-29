@@ -12,7 +12,7 @@ data "azurerm_key_vault" "mykv" {
 }
 
 data "azurerm_key_vault_secret" "kvrgname" {
-  name         = "rgname"
+  name         = "dev-eshoprgname"
   key_vault_id = data.azurerm_key_vault.mykv.id
 }
 data "azurerm_key_vault_secret" "kvlocation" {
