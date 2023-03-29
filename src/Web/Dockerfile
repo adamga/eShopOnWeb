@@ -8,7 +8,7 @@
 # RUN COMMAND
 #  docker run --name eshopweb --rm -it -p 5106:5106 web
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-RUN chmod u+rw /app
+#RUN chmod u+rw /app
 WORKDIR /app
 
 COPY *.sln .
