@@ -38,7 +38,7 @@ resource "azurerm_container_registry" "webshopaks" {
 }
 
 resource "azurerm_kubernetes_cluster" "webshopaks" {
-  name                = data.azurerm_key_vault_secret.askname.value
+  name                = data.azurerm_key_vault_secret.aksname.value
   location            = data.azurerm_key_vault_secret.kvlocation.value
   resource_group_name = data.azurerm_key_vault_secret.kvrgname.value
   dns_prefix          = "agwebshopcluster"
