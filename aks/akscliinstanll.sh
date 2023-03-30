@@ -14,6 +14,6 @@ RESOURCE_GROUP=$2
 # Connect to the AKS cluster
 az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME
 
-kubectl apply -f appdeploy.yaml 
+kubectl apply -f ./appdeploy.yaml 
 # Deploy the chart
 #helm install $RELEASE_NAME --generate-name --set containerPort=$CONTAINER_PORT,servicePort=$SERVICE_PORT
