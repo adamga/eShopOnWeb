@@ -17,4 +17,4 @@ SERVICE_PORT=$6
 az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME
 
 # Deploy the chart
-helm install $RELEASE_NAME $CHART_PATH --set imageName=$IMAGE_NAME,containerPort=$CONTAINER_PORT,servicePort=$SERVICE_PORT
+helm install $RELEASE_NAME --set containerPort=$CONTAINER_PORT,servicePort=$SERVICE_PORT
