@@ -1,5 +1,3 @@
-Here is an updated version of the script that sets the CHART_PATH variable to reference a subfolder of the script location called /webhelm and a YAML chart file named eshopwebhelm.yaml:
-
 #!/bin/bash
 
 # Set the AKS cluster name and resource group
@@ -14,6 +12,8 @@ CHART_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/webhe
 IMAGE_NAME=$4
 CONTAINER_PORT=$5
 SERVICE_PORT=$6
+
+LS
 
 # Connect to the AKS cluster
 az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME
