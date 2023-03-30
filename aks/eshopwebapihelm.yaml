@@ -1,0 +1,40 @@
+apiVersion: v2
+name: eshopwebapi
+description: A Helm chart for deploying a eshopwebapi container to a Kubernetes cluster
+version: 0.1.0
+# helm install my-release . --set imageName=my-image,containerPort=80,servicePort=80
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eshopwebapi-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eshopwebapi
+  template:
+    metadata:
+      labels:
+        app: eshopwebapi
+    spec:
+      containers:
+      - name: eshopwebapi
+        image: {{ .Values.imageName }}
+        ports:
+        - containerPort: {{ .Values.containerPort }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: eshopwebapi-service
+spec:
+  selector:
+    app: eshopwebapi
+  ports:
+  - protocol: TCP
+    port: {{ .Values.servicePort }}
+    targetPort: {{ .Values.containerPort }}
