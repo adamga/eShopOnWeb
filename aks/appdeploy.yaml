@@ -33,3 +33,41 @@ spec:
 
 ---
 
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress-controller
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx-ingress
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  - name: https
+    port: 443
+    targetPort: https
+
+
+
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: eshopweb-ingress-static
+#  annotations:
+#    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+#    nginx.ingress.kubernetes.io/rewrite-target: /static/$2
+#spec:
+#  type: LoadBalancer
+#  ingressClassName: nginx
+#  rules:
+#  - http:
+#      paths:
+#      - path: /static(/|$)(.*)
+#        pathType: Prefix
+#        backend:
+#          service:
+#            name: eshopweb
+#            port: 
+#              number: 80

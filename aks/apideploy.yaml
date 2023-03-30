@@ -33,3 +33,18 @@ spec:
 
 ---
 
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress-controller
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx-ingress
+  ports:
+  - name: http
+    port: 88
+    targetPort: http
+  - name: https
+    port: 4438
+    targetPort: https
