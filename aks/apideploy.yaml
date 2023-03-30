@@ -33,15 +33,3 @@ spec:
 
 ---
 
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: eshoponwebapi-ingress
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /
-        backend:
-          serviceName: eshoponwebapi
-          servicePort: 88
