@@ -1,3 +1,32 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+kind: SecretProviderClass
+metadata:
+  name: azure-kvname
+spec:
+  provider: azure
+  parameters:
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true"
+    userAssignedIdentityID: "1e814b61-c4f1-4aeb-adad-939b80722d5f"
+    keyvaultName: "AppDeploymentKV"
+    objects: |
+      array:
+        - |
+          objectName: dev-catalogdbconnstring
+          objectType: secret
+          objectVersion: ""
+        - |
+          objectName: dev-eshopIdentityConnString
+          objectType: secret
+          objectVersion: ""
+    tenantId: "df01d38f-092c-4fd1-9115-46e922189958"
+
+---
+
+
+
+
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,8 +44,24 @@ spec:
       containers:
       - name: eshoponweb
         image: eshoponweb
+        volumeMounts:
+        - name: secrets-store-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
         ports:
         - containerPort: 80
+      volumes:
+      - name: secrets-store-inline
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+           secretProviderClass: "azure-kvname"
+---
+
+
+
+
 
 ---
 
@@ -48,6 +93,9 @@ spec:
   - name: https
     port: 443
     targetPort: https
+
+---
+
 
 
 

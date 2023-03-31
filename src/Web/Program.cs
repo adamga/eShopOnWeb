@@ -19,6 +19,29 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
+if (File.Exists("/.dockerenv"))
+    {
+        builder.Configuration.AddJsonFile("/mnt/secrets-store/dev-catalogdbconnstring", optional: true, reloadOnChange: true);
+        builder.Configuration.AddJsonFile("/mnt/secrets-store/dev-eshopIdentityConnString", optional: true, reloadOnChange: true);
+
+
+        var secretValue = File.ReadAllText("/mnt/secrets-store/dev-catalogdbconnstring");
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+        {
+            { "CatalogConnection", secretValue }
+        });
+
+        secretValue = File.ReadAllText("/mnt/secrets-store/dev-eshopIdentityConnString");
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+        {
+            { "IdentityConnection", secretValue }
+        });
+
+    }
+
+
+
+
 builder.Logging.AddConsole();
 
 Microsoft.eShopWeb.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
