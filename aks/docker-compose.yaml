@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:      
+  using-env-variables:
+    image: webtest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5001:80
+    environment: 
+      - MyFirstValueCustomConfig=via environment variable!
+      - ComplexConfig__0__Parent__Child=Hi environment multilevel
+      - CatalogConnection = Server=tcp:agwebshopdemo-sqlsvr.database.windows.net,1433;Initial Catalog=CatalogDb;Persist Security Info=False;User ID=webshopdemoadmin;Password=P2ssw0rd1234!!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+      - IdentityConnection= Server=tcp:agwebshopdemo-sqlsvr.database.windows.net,1433;Initial Catalog=IDDB;Persist Security Info=False;UserID=webshopdemoadmin;Password=P2ssw0rd1234!!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;

@@ -19,25 +19,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
-if (File.Exists("/.dockerenv"))
-    {
-        builder.Configuration.AddJsonFile("/mnt/secrets-store/dev-catalogdbconnstring", optional: true, reloadOnChange: true);
-        builder.Configuration.AddJsonFile("/mnt/secrets-store/dev-eshopIdentityConnString", optional: true, reloadOnChange: true);
 
-
-        var secretValue = File.ReadAllText("/mnt/secrets-store/dev-catalogdbconnstring");
-        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
-        {
-            { "CatalogConnection", secretValue }
-        });
-
-        secretValue = File.ReadAllText("/mnt/secrets-store/dev-eshopIdentityConnString");
-        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
-        {
-            { "IdentityConnection", secretValue }
-        });
-
-    }
 
 
 
@@ -117,6 +99,28 @@ builder.Services.AddBlazorServices();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+
+
+if (File.Exists("/.dockerenv"))
+{
+    builder.Configuration.AddJsonFile("/mnt/secrets-store/dev-catalogdbconnstring", optional: true, reloadOnChange: true);
+    builder.Configuration.AddJsonFile("/mnt/secrets-store/dev-eshopIdentityConnString", optional: true, reloadOnChange: true);
+
+
+    var secretValue = File.ReadAllText("/mnt/secrets-store/dev-catalogdbconnstring");
+    builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+        {
+            { "CatalogConnection", secretValue }
+        });
+
+    secretValue = File.ReadAllText("/mnt/secrets-store/dev-eshopIdentityConnString");
+    builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+        {
+            { "IdentityConnection", secretValue }
+        });
+
+}
+
 var app = builder.Build();
 
 app.Logger.LogInformation("App created...");
@@ -126,20 +130,28 @@ app.Logger.LogInformation("Seeding Database...");
 using (var scope = app.Services.CreateScope())
 {
     var scopedProvider = scope.ServiceProvider;
-    try
-    {
-        var catalogContext = scopedProvider.GetRequiredService<CatalogContext>();
-        await CatalogContextSeed.SeedAsync(catalogContext, app.Logger);
+    var catalogContext = scopedProvider.GetRequiredService<CatalogContext>();
+    var userManager = scopedProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var identityContext = scopedProvider.GetRequiredService<AppIdentityDbContext>();
 
-        var userManager = scopedProvider.GetRequiredService<UserManager<ApplicationUser>>();
-        var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        var identityContext = scopedProvider.GetRequiredService<AppIdentityDbContext>();
-        await AppIdentityDbContextSeed.SeedAsync(identityContext, userManager, roleManager);
-    }
-    catch (Exception ex)
+    if (!File.Exists("/.dockerenv"))
     {
-        app.Logger.LogError(ex, "An error occurred seeding the DB.");
+        try
+        {
+
+ //           await CatalogContextSeed.SeedAsync(catalogContext, app.Logger);
+
+
+ //           await AppIdentityDbContextSeed.SeedAsync(identityContext, userManager, roleManager);
+        }
+        catch (Exception ex)
+        {
+            app.Logger.LogError(ex, "An error occurred seeding the DB.");
+        }
+
     }
+
 }
 
 var catalogBaseUrl = builder.Configuration.GetValue(typeof(string), "CatalogBaseUrl") as string;
