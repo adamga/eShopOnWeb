@@ -65,7 +65,6 @@ resource "azurerm_kubernetes_cluster" "webshopaks" {
 
   identity {
     type = "UserAssigned"
-    user_assigned_identity_id = "1e814b61-c4f1-4aeb-adad-939b80722d5f"
   }
 
 
