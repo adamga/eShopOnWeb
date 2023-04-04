@@ -54,17 +54,22 @@ resource "azurerm_kubernetes_cluster" "webshopaks" {
   location            = data.azurerm_key_vault_secret.kvlocation.value
   resource_group_name = data.azurerm_key_vault_secret.kvrgname.value
   dns_prefix          = data.azurerm_key_vault_secret.aksname.value
+  azure_keyvault_secrets_provider = true
 
   default_node_pool {
     name       = "default"
     node_count = 1
     vm_size    = data.azurerm_key_vault_secret.aksvmsize.value
   }
-  addon_profile {
-    azure_keyvault_secrets_provider {
-      enabled = true
-    }
-  }
+  
+
+
+
+  #addon_profile {
+  #  azure_keyvault_secrets_provider {
+  #    enabled = true
+  #  }
+  #}
   identity {
     type = "SystemAssigned"
   }
