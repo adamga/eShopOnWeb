@@ -52,17 +52,16 @@ resource "azurerm_kubernetes_cluster" "webshopaks" {
   identity {
     type = "SystemAssigned"
   }
+}
+
 
   resource "helm_release" "csi_secrets_store_provider_azure" {
   name       = "csi-secrets-store-provider-azure"
   repository = "https://raw.githubusercontent.com/Azure/secrets-store-csi-driver-provider-azure/master/charts"
   chart      = "csi-secrets-store-provider-azure"
 
-  set {
-    name  = "secrets-store-csi-driver.enabled"
-    value = true
+      set {
+        name  = "secrets-store-csi-driver.enabled"
+        value = true
+      }
   }
-
-
-
-}
