@@ -94,7 +94,7 @@ resource "helm_release" "kv_csi" {
   timeout      = 1800
   values       = [yamlencode(local.kv_csi_settings)]
   depends_on = [
-    data.azurerm_key_vault_secret.aksname.value
+    azurerm_kubernetes_cluster.webshopaks
   ]
 
 }
