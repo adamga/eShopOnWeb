@@ -66,7 +66,7 @@ resource "azurerm_kubernetes_cluster" "webshopaks" {
   identity {
     type = "UserAssigned"
     identity_ids = [
-      "1e814b61-c4f1-4aeb-adad-939b80722d5f"
+      "/subscriptions/7085574e-de5f-47b0-8725-8f4abb74c8de/resourceGroups/Deploy/providers/Microsoft.ManagedIdentity/userAssignedIdentities/akskvmanagedid"
     ]
   }
 
