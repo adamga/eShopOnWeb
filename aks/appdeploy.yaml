@@ -7,7 +7,7 @@ spec:
   parameters:
     usePodIdentity: "false"
     useVMManagedIdentity: "true"
-    userAssignedIdentityID: "0ddb20de-56eb-4148-a6e3-4a62d1fad0a7"
+    userAssignedIdentityID: "1e814b61-c4f1-4aeb-adad-939b80722d5f"
     keyvaultName: "AppDeploymentKV"
     objects: |
       array:
