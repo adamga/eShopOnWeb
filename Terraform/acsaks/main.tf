@@ -56,17 +56,19 @@ resource "azurerm_user_assigned_identity" "default" {
   resource_group_name = data.azurerm_key_vault_secret.kvrgname.value
 }
 
+# need to move the following 2 blocks out to the azure cli to perform post processing
+# user defined managed account as network contrib to rg
 #resource "azurerm_role_assignment" "default" {
 #  scope                =  data.azurerm_key_vault_secret.kvrgname.id
 #  role_definition_name = "Network Contributor"
 #  principal_id         = azurerm_user_assigned_identity.aks.principal_id
 #}
-
-resource "azurerm_role_assignment" "default" {
-  scope                = azurerm_container_registry.default.id
-  role_definition_name = "AcrPull"
-  principal_id         = azurerm_user_assigned_identity.default.principal_id
-}
+#rights to pull from registry for udma
+#resource "azurerm_role_assignment" "default" {
+#  scope                = azurerm_container_registry.default.id
+#  role_definition_name = "AcrPull"
+#  principal_id         = azurerm_user_assigned_identity.default.principal_id
+#}
 resource "azurerm_kubernetes_cluster" "default" {
   name                              = data.azurerm_key_vault_secret.aksname.value
   location                          = data.azurerm_key_vault_secret.kvlocation.value
