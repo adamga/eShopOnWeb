@@ -102,30 +102,32 @@ data "azurerm_key_vault_secret" "aksvmsize" {
 #}
 
 #}
+#data "azurerm_resource_group" "default" {
+#  name = "${var.project_name}-${var.environment}-rg"
+#}
 
-
-# The main resource group for this deployment
-resource "azurerm_resource_group" "default" {
-  name     = data.azurerm_key_vault_secret.kvrgname.value
-  location = data.azurerm_key_vault_secret.kvlocation.value
-}
+## The main resource group for this deployment
+#resource "azurerm_resource_group" "default" {
+#  name     = data.azurerm_key_vault_secret.kvrgname.value
+#  location = data.azurerm_key_vault_secret.kvlocation.value
+#}
 
 
 resource "azurerm_container_registry" "default" {
   name                     = data.azurerm_key_vault_secret.acrname.value
-  resource_group_name      = azurerm_resource_group.default.name
-  location                 = azurerm_resource_group.default.location
+  resource_group_name      = data.azurerm_key_vault_secret.kvrgname.value
+  location                 = data.azurerm_key_vault_secret.kvlocation.value
   sku                      = "Standard"
   admin_enabled            = false
 }
 resource "azurerm_user_assigned_identity" "aks" {
-  location            = azurerm_resource_group.default.location
+  location            = data.azurerm_key_vault_secret.kvlocation.value
   name                = "askidentityname"
-  resource_group_name = azurerm_resource_group.default.name
+  resource_group_name = data.azurerm_key_vault_secret.kvrgname.value
 }
 
 resource "azurerm_role_assignment" "aks_network" {
-  scope                = azurerm_resource_group.default.id
+  scope                = data.azurerm_key_vault_secret.kvrgname.id
   role_definition_name = "Network Contributor"
   principal_id         = azurerm_user_assigned_identity.aks.principal_id
 }
@@ -137,8 +139,8 @@ resource "azurerm_role_assignment" "aks_acr" {
 }
 resource "azurerm_kubernetes_cluster" "default" {
   name                              = data.azurerm_key_vault_secret.aksname.value
-  location                          = azurerm_resource_group.default.location
-  resource_group_name               = azurerm_resource_group.default.name
+  location                          = data.azurerm_key_vault_secret.kvlocation.value
+  resource_group_name               = data.azurerm_key_vault_secret.kvrgname.value
   dns_prefix                        = data.azurerm_key_vault_secret.aksname.value
   role_based_access_control_enabled = true
 
