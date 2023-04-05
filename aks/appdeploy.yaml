@@ -1,13 +1,14 @@
 apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
 kind: SecretProviderClass
 metadata:
-  name: azure-kvname
+  name: azure-kvname-user-msi
 spec:
   provider: azure
   parameters:
-    usePodIdentity: "true"
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true"   
+    userAssignedIdentityID: 1e814b61-c4f1-4aeb-adad-939b80722d5f
     keyvaultName: "AppDeploymentKV"
-    userAssignedIdentityID: "/subscriptions/7085574e-de5f-47b0-8725-8f4abb74c8de/resourcegroups/Deploy/providers/Microsoft.ManagedIdentity/userAssignedIdentities/akskvmanagedid"
     objects: |
       array:
         - |
@@ -52,7 +53,7 @@ spec:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
-           secretProviderClass: "azure-kvname"
+           secretProviderClass: "azure-kvname-user-msi"
 ---
 
 
