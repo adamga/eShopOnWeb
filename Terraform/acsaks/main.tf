@@ -43,76 +43,6 @@ data "azurerm_key_vault_secret" "aksvmsize" {
 }
 
 
-#locals {
-#  rgname = data.azurerm_key_vault_secret.kvrgname.value
-#  acrname = data.azurerm_key_vault_secret.acrname.value
-#  environment = "dev"
-#  rglocation = data.azurerm_key_vault_secret.kvlocation.value
-#  aksnode_count = 3
-#  aksnode_type = data.azurerm_key_vault_secret.aksvmsize.value
-#  aksdns_prefix = data.azurerm_key_vault_secret.aksname.value
-#}
-
-
-#// Node type information
-
-#variable "node_count" {
-#  type        = number
-#  description = "The number of K8S nodes to provision."
-#  default     = 3
-#}
-
-#variable "node_type" {
-#  type        = string
-#  description = "The size of each node."
-#  default     = data.azurerm_key_vault_secret.aksvmsize.value
-#}
-
-#variable "dns_prefix" {
-#  type        = string
-#  description = "DNS Prefix"
-#  default     = data.azurerm_key_vault_secret.aksname.value
-
-#// Naming
-#variable "name" {
-#  type        = string
-#  description = "Location of the azure resource group."
-#  default     = data.azurerm_key_vault_secret.kvrgname.value
-#}
-
-#variable "acrname" {
-#  type        = string
-#  description = "name of the ACR"
-#  default     = data.azurerm_key_vault_secret.acrname.value
-#}
-
-
-#variable "environment" {
-#  type        = string
-#  description = "Name of the deployment environment"
-#  default     = "dev"
-#}
-
-#// Resource information
-
-#variable "location" {
-#  type        = string
-#  description = "Location of the azure resource group."
-#  default     = data.azurerm_key_vault_secret.kvlocation.value
-#}
-
-#}
-#data "azurerm_resource_group" "default" {
-#  name = "${var.project_name}-${var.environment}-rg"
-#}
-
-## The main resource group for this deployment
-#resource "azurerm_resource_group" "default" {
-#  name     = data.azurerm_key_vault_secret.kvrgname.value
-#  location = data.azurerm_key_vault_secret.kvlocation.value
-#}
-
-
 resource "azurerm_container_registry" "default" {
   name                     = data.azurerm_key_vault_secret.acrname.value
   resource_group_name      = data.azurerm_key_vault_secret.kvrgname.value
@@ -120,22 +50,22 @@ resource "azurerm_container_registry" "default" {
   sku                      = "Standard"
   admin_enabled            = false
 }
-resource "azurerm_user_assigned_identity" "aks" {
+resource "azurerm_user_assigned_identity" "default" {
   location            = data.azurerm_key_vault_secret.kvlocation.value
   name                = "askidentityname"
   resource_group_name = data.azurerm_key_vault_secret.kvrgname.value
 }
 
-resource "azurerm_role_assignment" "aks_network" {
-  scope                = data.azurerm_key_vault_secret.kvrgname.id
-  role_definition_name = "Network Contributor"
-  principal_id         = azurerm_user_assigned_identity.aks.principal_id
-}
+#resource "azurerm_role_assignment" "default" {
+#  scope                =  data.azurerm_key_vault_secret.kvrgname.id
+#  role_definition_name = "Network Contributor"
+#  principal_id         = azurerm_user_assigned_identity.aks.principal_id
+#}
 
-resource "azurerm_role_assignment" "aks_acr" {
+resource "azurerm_role_assignment" "default" {
   scope                = azurerm_container_registry.default.id
   role_definition_name = "AcrPull"
-  principal_id         = azurerm_user_assigned_identity.aks.principal_id
+  principal_id         = azurerm_user_assigned_identity.default.principal_id
 }
 resource "azurerm_kubernetes_cluster" "default" {
   name                              = data.azurerm_key_vault_secret.aksname.value
