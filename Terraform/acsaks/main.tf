@@ -44,13 +44,13 @@ data "azurerm_key_vault_secret" "aksvmsize" {
 
 
 locals {
-  name = data.azurerm_key_vault_secret.kvrgname.value
+  rgname = data.azurerm_key_vault_secret.kvrgname.value
   acrname = data.azurerm_key_vault_secret.acrname.value
   environment = "dev"
-  location = data.azurerm_key_vault_secret.kvlocation.value
-  node_count = 3
-  node_type = data.azurerm_key_vault_secret.aksvmsize.value
-  dns_prefix = data.azurerm_key_vault_secret.aksname.value
+  rglocation = data.azurerm_key_vault_secret.kvlocation.value
+  aksnode_count = 3
+  aksnode_type = data.azurerm_key_vault_secret.aksvmsize.value
+  aksdns_prefix = data.azurerm_key_vault_secret.aksname.value
 }
 
 
@@ -106,13 +106,13 @@ locals {
 
 # The main resource group for this deployment
 resource "azurerm_resource_group" "default" {
-  name     = var.name
-  location = var.location
+  name     = rgname
+  location = rglocation
 }
 
 
 resource "azurerm_container_registry" "default" {
-  name                     = var.acrname
+  name                     = acrname
   resource_group_name      = azurerm_resource_group.default.name
   location                 = azurerm_resource_group.default.location
   sku                      = "Standard"
@@ -136,16 +136,16 @@ resource "azurerm_role_assignment" "aks_acr" {
   principal_id         = azurerm_user_assigned_identity.aks.principal_id
 }
 resource "azurerm_kubernetes_cluster" "default" {
-  name                              = var.aksname
+  name                              = aksname
   location                          = azurerm_resource_group.default.location
   resource_group_name               = azurerm_resource_group.default.name
-  dns_prefix                        = var.aksname
+  dns_prefix                        = aksname
   role_based_access_control_enabled = true
 
   default_node_pool {
     name            = "default"
-    vm_size         = var.node_type
-    node_count      = var.node_count
+    vm_size         = aksnode_type
+    node_count      = aksnode_count
     os_disk_size_gb = 30
   }
   identity {
