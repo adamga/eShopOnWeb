@@ -1,4 +1,4 @@
-apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
   name: azure-kvname-user-msi
@@ -7,7 +7,7 @@ spec:
   parameters:
     usePodIdentity: "false"
     useVMManagedIdentity: "true"   
-    userAssignedIdentityID: 1e814b61-c4f1-4aeb-adad-939b80722d5f
+    userAssignedIdentityID: "39fd27bd-30d4-453e-8aa4-761d04ca608f"
     keyvaultName: "AppDeploymentKV"
     objects: |
       array:
@@ -22,6 +22,7 @@ spec:
     tenantId: "df01d38f-092c-4fd1-9115-46e922189958"
 
 ---
+
 
 
 apiVersion: apps/v1
@@ -42,13 +43,13 @@ spec:
       - name: eshoponweb
         image: eshoponweb
         volumeMounts:
-        - name: secrets-store-inline
+        - name: secrets-store01-inline
           mountPath: "/mnt/secrets-store"
           readOnly: true
         ports:
         - containerPort: 80
       volumes:
-      - name: secrets-store-inline
+      - name: secrets-store01-inline
         csi:
           driver: secrets-store.csi.k8s.io
           readOnly: true
@@ -60,36 +61,36 @@ spec:
 
 
 
----
+#---
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: eshoponweb
-spec:
-  selector:
-    app: eshoponweb
-  ports:
-  - protocol: TCP
-    port: 80
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: eshoponweb
+#spec:
+#  selector:
+#    app: eshoponweb
+#  ports:
+#  - protocol: TCP
+#    port: 80
 
----
+#---
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-ingress-controller
-spec:
-  type: LoadBalancer
-  selector:
-    app: nginx-ingress
-  ports:
-  - name: http
-    port: 80
-    targetPort: http
-  - name: https
-    port: 443
-    targetPort: https
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: nginx-ingress-controller
+#spec:
+#  type: LoadBalancer
+#  selector:
+#    app: nginx-ingress
+#  ports:
+#  - name: http
+#    port: 80
+#    targetPort: http
+#  - name: https
+#    port: 443
+#    targetPort: https
 
 ---
 
