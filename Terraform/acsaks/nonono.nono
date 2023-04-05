@@ -1,20 +1,18 @@
 terraform {
-  required_version = ">= 1.3"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.0"
+      version = ">= 2.62.0"
     }
   }
 }
 
+
+
+
 provider "azurerm" {
   features {}
 }
-
-# Reference to the current subscription.  Used when creating role assignments
-data "azurerm_subscription" "current" {}
-
 
 data "azurerm_key_vault" "mykv" {
   name                = "AppDeploymentKV"
@@ -52,13 +50,6 @@ variable "name" {
   default     = data.azurerm_key_vault_secret.kvrgname.value
 }
 
-variable "acrname" {
-  type        = string
-  description = "name of the ACR"
-  default     = data.azurerm_key_vault_secret.acrname.value
-}
-
-
 variable "environment" {
   type        = string
   description = "Name of the deployment environment"
@@ -91,11 +82,4 @@ variable "dns_prefix" {
   type        = string
   description = "DNS Prefix"
   default     = data.azurerm_key_vault_secret.aksname.value
-}
-
-
-# The main resource group for this deployment
-resource "azurerm_resource_group" "default" {
-  name     = var.name
-  location = var.location
 }
