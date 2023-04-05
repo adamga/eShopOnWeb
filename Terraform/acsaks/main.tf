@@ -82,8 +82,8 @@ resource "azurerm_kubernetes_cluster" "default" {
   }
   identity {
     type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.aks.id]
+    identity_ids = [azurerm_user_assigned_identity.default.id]
   }
 
-  depends_on                        = [azurerm_role_assignment.aks_network, azurerm_role_assignment.aks_acr]
+  #depends_on                        = [azurerm_role_assignment.aks_network, azurerm_role_assignment.aks_acr]
 }
