@@ -83,11 +83,11 @@ resource "azurerm_kubernetes_cluster" "default" {
     os_disk_size_gb = 30
   }
 
-  user_assigned_identity_id = azurerm_user_assigned_identity.default.id
-  #identity {
-  #  type         = "UserAssigned"
-  #  identity_ids = [azurerm_user_assigned_identity.default.id]
-  #}
+  #user_assigned_identity_id = azurerm_user_assigned_identity.default.id
+  identity {
+    type         = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.default.id]
+  }
 
   #depends_on                        = [azurerm_role_assignment.aks_network, azurerm_role_assignment.aks_acr]
 }
