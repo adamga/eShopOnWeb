@@ -121,7 +121,7 @@ resource "azurerm_role_assignment" "default" {
 #  role_definition_name = "Network Contributor"
 #  principal_id         = azurerm_kubernetes_cluster.default.identity[0].principal_id
 #}
-resource "azurerm_role_assignment" "default" {
+resource "azurerm_role_assignment" "roleass" {
   scope                = data.azurerm_key_vault_secret.acrname.id
   role_definition_name = "AcrPull"
   principal_id         = azurerm_kubernetes_cluster.default.kubelet_identity[0].object_id
