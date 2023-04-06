@@ -75,9 +75,7 @@ resource "azurerm_kubernetes_cluster" "default" {
   location                          = data.azurerm_key_vault_secret.kvlocation.value
   resource_group_name               = data.azurerm_key_vault_secret.kvrgname.value
   dns_prefix                        = data.azurerm_key_vault_secret.aksname.value
-  role_based_access_control = {
-    enabled = true
-  }
+
 
   #azure_active_directory {
   #  managed = true
