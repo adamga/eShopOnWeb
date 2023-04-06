@@ -44,13 +44,13 @@ data "azurerm_key_vault_secret" "aksvmsize" {
 }
 
 
-resource "azurerm_container_registry" "default" {
-  name                     = data.azurerm_key_vault_secret.acrname.value
-  resource_group_name      = data.azurerm_key_vault_secret.kvrgname.value
-  location                 = data.azurerm_key_vault_secret.kvlocation.value
-  sku                      = "Standard"
-  admin_enabled            = false
-}
+#resource "azurerm_container_registry" "default" {
+#  name                     = data.azurerm_key_vault_secret.acrname.value
+#  resource_group_name      = data.azurerm_key_vault_secret.kvrgname.value
+#  location                 = data.azurerm_key_vault_secret.kvlocation.value
+#  sku                      = "Standard"
+#  admin_enabled            = false
+#}
 resource "azurerm_user_assigned_identity" "default" {
   location            = data.azurerm_key_vault_secret.kvlocation.value
   name                = "askidentityname"
