@@ -12,6 +12,14 @@ provider "azurerm" {
   features {}
 }
 
+provider "azuread" {
+  version = ">= 0.6"
+}
+
+data "azuread_group" "default" {
+  name = "AKSManage"
+}
+
 # Reference to the current subscription.  Used when creating role assignments
 data "azurerm_subscription" "current" {}
 
@@ -74,13 +82,24 @@ resource "azurerm_kubernetes_cluster" "default" {
   location                          = data.azurerm_key_vault_secret.kvlocation.value
   resource_group_name               = data.azurerm_key_vault_secret.kvrgname.value
   dns_prefix                        = data.azurerm_key_vault_secret.aksname.value
-  role_based_access_control_enabled = true
+
 
   default_node_pool {
     name            = "default"
     vm_size         = data.azurerm_key_vault_secret.aksvmsize.value
     node_count      = 3
     os_disk_size_gb = 30
+  }
+
+  role_based_access_control {
+    enabled = true
+
+    azure_active_directory {
+      managed = true
+      admin_group_object_ids = [
+        data.azuread_group.aks.id
+      ]
+    }
   }
 
   #user_assigned_identity_id = azurerm_user_assigned_identity.default.id
@@ -90,4 +109,20 @@ resource "azurerm_kubernetes_cluster" "default" {
   }
 
   #depends_on                        = [azurerm_role_assignment.aks_network, azurerm_role_assignment.aks_acr]
+}
+
+resource "azurerm_role_assignment" "default" {
+  scope                = data.azurerm_key_vault_secret.aksname.id
+  role_definition_name = "Monitoring Metrics Publisher"
+  principal_id         = azurerm_kubernetes_cluster.default.identity[0].principal_id
+}
+#resource "azurerm_role_assignment" "aks_subnet" {
+#  scope                = var.vnet_subnet_id
+#  role_definition_name = "Network Contributor"
+#  principal_id         = azurerm_kubernetes_cluster.default.identity[0].principal_id
+#}
+resource "azurerm_role_assignment" "default" {
+  scope                = data.azurerm_key_vault_secret.acrname.id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_kubernetes_cluster.default.kubelet_identity[0].object_id
 }
