@@ -79,12 +79,12 @@ resource "azurerm_kubernetes_cluster" "default" {
     enabled = true
   }
 
-  azure_active_directory {
-    managed = true
-    admin_group_object_ids = [
-      "bb848a2d-602f-474a-81b7-9b8893ca834c"
-    ]
-  }
+  #azure_active_directory {
+  #  managed = true
+  #  admin_group_object_ids = [
+  #    "bb848a2d-602f-474a-81b7-9b8893ca834c"
+  #  ]
+  #}
 
   default_node_pool {
     name            = "default"
