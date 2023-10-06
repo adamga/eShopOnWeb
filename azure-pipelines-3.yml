@@ -34,3 +34,4 @@ steps:
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'myWebsiteName'
+- task: AdvancedSecurity-Dependency-Scanning@1
